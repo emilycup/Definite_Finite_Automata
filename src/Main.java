@@ -13,9 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-	boolean accepted = false;
-	public int numberOfStates = 0;
-	public int finalStates = 0;
+	public boolean accepted = false;
+	public int numberOfStates;
+	public String finalStates;
+	public String[] states;
 	public String transitions;
 	public ArrayList<String> DFAInfo = new ArrayList();
 
@@ -23,6 +24,7 @@ public class Main {
 		Main start = new Main();
 		String fileName = "src/language.txt";
 		start.readFile(fileName);
+		start.setValues();
 		start.displayFA();
 	}
 
@@ -38,7 +40,6 @@ public class Main {
 			FileReader fileReader = new FileReader(fileName);
 			BufferedReader buffReader = new BufferedReader(fileReader);
 			while ((line = buffReader.readLine()) != null) {
-				System.out.println(line);
 				DFAInfo.add(line);
 				i++;
 			}
@@ -56,14 +57,31 @@ public class Main {
 	// 	DISPLAY RESULTS:
 	//  	Will display the results and information about the Definite Finite Automata to the user
 	// ==============================================================================================
+	public void setValues() {
+		numberOfStates = Integer.parseInt(DFAInfo.get(0));
+
+		// create the states
+		
+
+		finalStates = DFAInfo.get(1);
+
+		states = new String[numberOfStates];
+		states = DFAInfo.get(2).split(" ");
+
+	}
+
+	// ==============================================================================================
+	// 	DISPLAY RESULTS:
+	//  	Will display the results and information about the Definite Finite Automata to the user
+	// ==============================================================================================
 	public void displayFA() {
 		int i = 3;
 		System.out.println("--- FINITE STATE AUTOMATION ---");
-		System.out.println("1) Number of states:" + DFAInfo.get(0));
-		System.out.println("2) Final states: " + DFAInfo.get(1));
-		System.out.println("3) Alphabet: " + DFAInfo.get(2).replace(" ", ", "));
+		System.out.println("1) Number of states: " + numberOfStates);
+		System.out.println("2) Final states: " + finalStates);
+		System.out.println("3) Alphabet: " + DFAInfo.get(2).replace("", ", "));
 		System.out.println("4) Transitions: ");
-		while (DFAInfo.get(i).contains("(")){
+		while (DFAInfo.get(i).startsWith("(")){
 			System.out.println("\t\t" + DFAInfo.get(i).replace("(", "").replace(")", ""));
 			i++;
 		}
