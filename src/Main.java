@@ -69,9 +69,7 @@ public class Main {
                 return false;
             }
             else{
-                // for each letter in the word
-                // NextState = transitionTable[state][word.charAt(i)]
-                // state = NextState;
+                  state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
             }
         }
         // if (state = numberOfStates){
