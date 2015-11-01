@@ -65,12 +65,21 @@ public class Main {
         state = 0; // always will start at 0
         for (int i = 0; i < word.length(); i++) {
             //N stands for a numeric value, which shall be theorized as 1 for the transition
-            if(Character.isDigit(word.charAt(i))) {
+
+            if(word.trim().isEmpty()) {
+                state = 0;
+            }
+
+            else if(Character.isDigit(word.charAt(i))) {
                 if(alphabetSet.contains('N')) {
                     state = Character.getNumericValue(transitionTable[state][1]);
-                } else if(alphabetSet.contains(word.charAt(i))) {
+                }
+
+                else if(alphabetSet.contains(word.charAt(i))) {
                     state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
-                } else {
+                }
+
+                else {
                     return false;
                 }
             }
@@ -80,10 +89,14 @@ public class Main {
             else if(Character.isAlphabetic(word.charAt(i))) {
                 if(alphabetSet.contains('L')) {
                     state = Character.getNumericValue(transitionTable[state][0]);
-                } else {
+                }
+
+                else {
                     return false;
                 }
-            } else {
+            }
+
+            else {
                 return false;
             }
 
@@ -223,8 +236,11 @@ public class Main {
         }
         System.out.println("5) Strings: ");
         for (int j = 0; j < stringsToCheck.size(); j++) {
-            System.out.print("\t\t" + stringsToCheck.get(j) + " ");
-
+            if(stringsToCheck.get(j).trim().isEmpty()) {
+                System.out.print("\t\t" + "\"\"" + " ");
+            } else {
+                System.out.print("\t\t" + stringsToCheck.get(j) + " ");
+            }
             //We will be calling on our comparison function to determine whether the input is accepted or rejected
             if(completeTransition(stringsToCheck.get(j))) {
                 System.out.println("Accepted");
