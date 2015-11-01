@@ -71,7 +71,11 @@ public class Main {
             }
 
             else if(Character.isDigit(word.charAt(i))) {
-                if(alphabetSet.contains('N')) {
+                if(alphabetSet.contains('Z') && word.charAt(i) == '0') {
+                    state = Character.getNumericValue(transitionTable[state][0]);
+                }
+
+                else if(alphabetSet.contains('N') || alphabetSet.contains('P')) {
                     state = Character.getNumericValue(transitionTable[state][1]);
                 }
 
