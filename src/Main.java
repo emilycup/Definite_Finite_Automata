@@ -16,18 +16,12 @@ import java.util.Set;
 
 public class Main {
     public boolean accepted = false;
-    public int numberOfStates;
-    public String finalStates;
-    public String alphabet;
-    public String transitions;
+    public int numberOfStates, state, finalValue;
+    public String finalStates, transitionInfo, alphabet, transitions;
     public ArrayList<String> DFAInfo = new ArrayList();
     public char[][] transitionTable;
-    String transitionInfo;
-    Set<Character> alphabetSet;
+    Set<Character> alphabetSet, finalstateset;
     ArrayList<String> stringsToCheck = new ArrayList<String>();
-    public int state;
-    public int finalValue;
-
 
     /**
      * READ FILE:
@@ -56,28 +50,25 @@ public class Main {
 
     /**
      * TRANSITION:
-     *      will return truee if the DFA is accepted and false if it is rejected
+     *      will return true if the DFA is accepted and false if it is rejected
      */
-    public boolean completeTransition(String word){
+    public boolean completeTransition(String word) {
         state = 0; // always will start at 0
         finalValue = numberOfStates;
 
-        for (int i = 0; i < word.length(); i++){
-
+        for (int i = 0; i < word.length(); i++) {
             // will determine if the character is in the alphabet set
-            if(!alphabetSet.contains(word.charAt(i))){
+            if (!alphabetSet.contains(word.charAt(i))) {
                 return false;
-            }
-            else{
-                  state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
+            } else {
+                state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
             }
         }
-        // if (state = numberOfStates){
-        //      this is a word :) so return true
-        // } else
-        //      return false;
-        // }
-        return false; // REPLACE THIS WHEN FINISHED
+
+        if (finalstateset.contains(state)) {
+            return true;
+        } else
+            return false;
     }
 
 
@@ -105,7 +96,6 @@ public class Main {
     public void setValues() {
         int fileLine = 3;
         numberOfStates = Integer.parseInt(DFAInfo.get(0));
-        finalStates = DFAInfo.get(1);
 
         alphabet = DFAInfo.get(2).replace(" ", "");
         alphabetSet = new HashSet<>();
@@ -113,6 +103,14 @@ public class Main {
         // adding characters to the set
         for (int i = 0; i < alphabet.length(); i++){
             alphabetSet.add(alphabet.charAt(i));
+        }
+
+        // adding final states to the set
+        finalStates = DFAInfo.get(1).replace(" ", "");
+        finalstateset = new HashSet<>();
+
+        for (int i = 0; i < finalStates.length(); i++) {
+            finalstateset.add(finalStates.charAt(i));
         }
 
         // initialize transition table
@@ -139,7 +137,7 @@ public class Main {
         int i = 3;
         System.out.println("--- FINITE STATE AUTOMATION ---");
         System.out.println("1) Number of states: " + numberOfStates);
-        System.out.println("2) Final states: " + finalStates);
+        System.out.println("2) Final states: " + DFAInfo.get(1).replace(" ", ", "));
         System.out.println("3) Alphabet: " + DFAInfo.get(2).replace(" ", ", "));
         System.out.println("4) Transitions: ");
         while (DFAInfo.get(i).startsWith("(")) {
