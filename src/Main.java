@@ -64,13 +64,35 @@ public class Main {
     public boolean completeTransition(String word) {
         state = 0; // always will start at 0
         for (int i = 0; i < word.length(); i++) {
-            // will determine if the character is in the alphabet set
-            if (!alphabetSet.contains(word.charAt(i))) {
-                return false;
-            } else {
-                state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
-//                System.out.println(Integer.toString(state));
+            //N stands for a numeric value, which shall be theorized as 1 for the transition
+            if(Character.isDigit(word.charAt(i))) {
+                if(alphabetSet.contains('N')) {
+                    state = Character.getNumericValue(transitionTable[state][1]);
+                } else if(alphabetSet.contains(word.charAt(i))) {
+                    state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
+                } else {
+                    return false;
+                }
             }
+
+            //L stands for an alphabetic value, which shall be theorized as 0 for the transition
+
+            else if(Character.isAlphabetic(word.charAt(i))) {
+                if(alphabetSet.contains('L')) {
+                    state = Character.getNumericValue(transitionTable[state][0]);
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+
+            // will determine if the character is in the alphabet set
+//            if (alphabetSet.contains(word.charAt(i))) {
+//                state = Character.getNumericValue(transitionTable[state][Character.getNumericValue(word.charAt(i))]);
+//            } else {
+//
+//            }
         }
 
         if (finalstateset.contains(Character.forDigit(state, 10))) {
