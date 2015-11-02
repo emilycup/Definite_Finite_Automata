@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class Main {
     public int numberOfStates, state, count = 1;
-    public String finalStates, transitionInfo, alphabet, fscopy, acopy;
+    public String finalStates, transitionInfo, alphabet, finalStateCopy, alphabetCopy;
     public ArrayList<String> DFAInfo = new ArrayList();
     public char[][] transitionTable;
     Set<Character> alphabetSet, finalstateset;
@@ -126,7 +126,7 @@ public class Main {
             i++;
 
             //string that will be used to print the final states
-            fscopy = DFAInfo.get(i);
+            finalStateCopy = DFAInfo.get(i);
             finalStates = DFAInfo.get(i).replace(" ", "");
             for(int j = 0; j < finalStates.length(); j++) {
                 finalstateset.add(finalStates.charAt(j));
@@ -134,7 +134,7 @@ public class Main {
             i++;
 
             //string that will be used to print the alphabet
-            acopy = DFAInfo.get(i);
+            alphabetCopy = DFAInfo.get(i);
             alphabet = DFAInfo.get(i).replace(" ", "");
             for(int j = 0; j < alphabet.length(); j++) {
                 alphabetSet.add(alphabet.charAt(j));
@@ -179,8 +179,8 @@ public class Main {
     public void displayFA(int Transitions) {
         System.out.println("--- FINITE STATE AUTOMATION #" + count + "---");
         System.out.println("1) Number of states: " + numberOfStates);
-        System.out.println("2) Final states: " + fscopy.replace(" ", ", "));
-        System.out.println("3) Alphabet: " + acopy.replace(" ", ", "));
+        System.out.println("2) Final states: " + finalStateCopy.replace(" ", ", "));
+        System.out.println("3) Alphabet: " + alphabetCopy.replace(" ", ", "));
         System.out.println("4) Transitions: ");
         while (DFAInfo.get(Transitions).startsWith("(")) {
             System.out.println("\t\t" + DFAInfo.get(Transitions).replace("(", "").replace(")", ""));
