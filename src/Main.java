@@ -3,7 +3,8 @@
 // Project:		Language Translation and Automata
 //					This project will take in a language (a .txt file) with  
 //					a variety of strings. The program will determine whether the
-//					string is is accepted or rejected.
+//					string is is accepted or rejected. It has been configured to solve
+//                  the 4 problems provided within the assignment.
 // ================================================================================================
 
 import java.io.BufferedReader;
@@ -17,11 +18,11 @@ import java.util.Set;
 /**
  * The FA will properly determine whether or not an input is accepted or rejected.
  *
- * Optimize, works for problems 1-4.
+ * Optimize, works for machines 1-4.
  */
 
 public class Main {
-    public int numberOfStates, state;
+    public int numberOfStates, state, count = 1;
     public String finalStates, transitionInfo, alphabet, fscopy, acopy;
     public ArrayList<String> DFAInfo = new ArrayList();
     public char[][] transitionTable;
@@ -111,22 +112,6 @@ public class Main {
             return false;
     }
 
-//	     state ← initial_state;   exit ← false;
-//	     while not exit do
-//			     begin
-//	          symbol ← NextSymbol();
-//	          if symbol is in alphabet then begin
-//	                 state ← NextState(state, symbol);
-//	                 if state is dead_end then begin exit ← true;  Reject();  end
-//	                 end
-//	          else begin
-//		       exit ← true;
-//	               if symbol is not the endmarker then Reject()
-//	               else if state is final then Accept()
-//	               else Reject();
-//	         end //if
-//	    end //while
-
     /**
      * SET VALUES:
      *      Will display the results and information about the Definite Finite Automata to the user
@@ -140,7 +125,7 @@ public class Main {
             numberOfStates = Integer.parseInt(DFAInfo.get(i));
             i++;
 
-            //string that will be used to print
+            //string that will be used to print the final states
             fscopy = DFAInfo.get(i);
             finalStates = DFAInfo.get(i).replace(" ", "");
             for(int j = 0; j < finalStates.length(); j++) {
@@ -148,7 +133,7 @@ public class Main {
             }
             i++;
 
-            //string that will be used to print
+            //string that will be used to print the alphabet
             acopy = DFAInfo.get(i);
             alphabet = DFAInfo.get(i).replace(" ", "");
             for(int j = 0; j < alphabet.length(); j++) {
@@ -185,45 +170,6 @@ public class Main {
             finalstateset.clear();
             stringsToCheck.clear();
         }
-//        int fileLine = 3;
-//
-//        /**
-//         * We will be using sets in order to keep track of the alphabet and final states.
-//         * These sets will be used to compare and determine whether an input is accepted or rejected.
-//         */
-
-//
-//        numberOfStates = Integer.parseInt(DFAInfo.get(0));
-//
-//        //Populating final states
-//        finalStates = DFAInfo.get(1).replace(" ", "");
-//        for(int i = 0; i < finalStates.length(); i++) {
-//            finalstateset.add(finalStates.charAt(i));
-//        }
-//
-//        //Populating alphabet states
-//        alphabet = DFAInfo.get(2).replace(" ", "");
-//        for(int i = 0; i < alphabet.length(); i++) {
-//            alphabetSet.add(alphabet.charAt(i));
-//        }
-//
-//        // initialize transition table
-//        transitionTable = new char[numberOfStates][alphabetSet.size()];
-//
-//        // fill transition table
-//        while (DFAInfo.get(fileLine).startsWith("(")) {
-//            transitionInfo = DFAInfo.get(fileLine).replace("(", "").replace(")", "").replace(" ", "");
-//            transitionTable[Character.getNumericValue(transitionInfo.charAt(0))][Character.getNumericValue(transitionInfo.charAt(1))] = transitionInfo.charAt(2);
-//            fileLine++;
-//        }
-//
-//        while(fileLine < DFAInfo.size()){
-//            if(DFAInfo.get(fileLine).isEmpty()) {
-//
-//            }
-//            stringsToCheck.add(DFAInfo.get(fileLine));
-//            fileLine++;
-//        }
     }
 
     /**
@@ -231,7 +177,7 @@ public class Main {
      *      Will display the results and information about the Definite Finite Automata to the user
      */
     public void displayFA(int Transitions) {
-        System.out.println("--- FINITE STATE AUTOMATION ---");
+        System.out.println("--- FINITE STATE AUTOMATION #" + count + "---");
         System.out.println("1) Number of states: " + numberOfStates);
         System.out.println("2) Final states: " + fscopy.replace(" ", ", "));
         System.out.println("3) Alphabet: " + acopy.replace(" ", ", "));
@@ -255,19 +201,7 @@ public class Main {
             }
         }
         System.out.print("\n");
-    }
-
-    /**
-     * PRINT TRANSITION TABLE:
-     *      Will print the transition table
-     */
-    public void printTransitionTable(){
-        for (int i = 0; i < numberOfStates; i++){
-            for(int j = 0; j < alphabetSet.size(); j++){
-                System.out.print(transitionTable[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
+        count++;
     }
 
     /**
